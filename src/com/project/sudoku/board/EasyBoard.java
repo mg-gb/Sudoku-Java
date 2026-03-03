@@ -1,43 +1,64 @@
 package com.project.sudoku.board;
 
-public class EasyBoard {
-    /*
-     * generateBoard()
-     * Main method to generate an easy puzzle.
-     * Steps:
-     * 1. Fill the board completely with valid numbers
-     * 2. Remove 40 numbers to create empty cells (zeros)
-     */
+import java.util.Random;
 
-    /*
-     * getRandomNumbers()
-     * ------------------
-     * Returns a shuffled array of numbers 1–9.
-     * Used to randomize number placement for variety.
-     */
+public class EasyBoard extends SudokuBoard {
+    Random random = new Random();
 
-    /*
-     * fillBoard()
-     * ------------
-     * Recursively fills the board with valid numbers.
-     * Uses backtracking:
-     * - Picks a cell
-     * - Tries numbers in random order
-     * - Validates using MoveValidator
-     * - Recursively continues until board is full
-     *
-     * Returns true if board is completely filled, false otherwise.
-     */
+    public void generateBoard() {
+        this.fillBoard();
+        this.removeNumbers(40);
+    }
 
-    /*
-     * removeNumbers(int zeroes)
-     * --------------------------
-     * Removes a number of cells to create empty spots (zeros).
-     * - Chooses random row and column
-     * - Sets the cell to 0 if it isn’t already
-     * - Repeats until desired number of zeros is reached
-     *
-     * Parameter:
-     * zeroes - number of cells to remove
-     */
+    private int[] getRandomNumbers() {
+        int[] numbers = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+        for(int i = 0; i < numbers.length; ++i) {
+            int j = this.random.nextInt(9);
+            int temp = numbers[i];
+            numbers[i] = numbers[j];
+            numbers[j] = temp;
+        }
+
+        return numbers;
+    }
+
+    private boolean fillBoard() {
+        for(int row = 0; row < 9; ++row) {
+            for(int col = 0; col < 9; ++col) {
+                if (this.board[row][col] == 0) {
+                    int[] numbers = this.getRandomNumbers();
+
+                    for(int num : numbers) {
+                        if (MoveValidator.isValidMove(this.board, row, col, num)) {
+                            this.board[row][col] = num;
+                            if (this.fillBoard()) {
+                                return true;
+                            }
+
+                            this.board[row][col] = 0;
+                        }
+                    }
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void removeNumbers(int zeroes) {
+        int count = 0;
+
+        while(count < zeroes) {
+            int row = this.random.nextInt(9);
+            int col = this.random.nextInt(9);
+            if (this.board[row][col] != 0) {
+                this.board[row][col] = 0;
+                ++count;
+            }
+        }
+
+    }
 }
