@@ -1,21 +1,30 @@
 package com.project.sudoku.board;
 
 public class MoveValidator {
-    //Suggest nako mao ni imo una buhaton :) kay dali ra
+    public static boolean isValidMove(int[][] board, int row, int col, int num) {
+        for(int c = 0; c < 9; ++c) {
+            if (board[row][c] == num) {
+                return false;
+            }
+        }
 
-    /*
-     * isValidMove()
-     * -------------
-     * Checks if a number can be placed at a specific cell.
-     *
-     * Parameters:
-     * - board: the 2D Sudoku board
-     * - row: row index (0–8)
-     * - col: column index (0–8)
-     * - num: number to place (1–9)
-     *
-     * Returns:
-     * - true if the move is valid
-     * - false if the number already exists in the row, column, or box
-     */
+        for(int r = 0; r < 9; ++r) {
+            if (board[r][col] == num) {
+                return false;
+            }
+        }
+
+        int startRow = row - row % 3;
+        int startCol = col - col % 3;
+
+        for(int r = startRow; r < startRow + 3; ++r) {
+            for(int c = startCol; c < startCol + 3; ++c) {
+                if (board[r][c] == num) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }
