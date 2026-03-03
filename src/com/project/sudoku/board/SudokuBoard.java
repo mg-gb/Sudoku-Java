@@ -1,57 +1,54 @@
 package com.project.sudoku.board;
 
-public class SudokuBoard {
-    /*
-     * Defines the structure and core behavior of a Sudoku board.
-     * Provides the grid representation and basic board operations.
-     * Puzzle generation must be implemented by subclasses.
-     */
+public abstract class SudokuBoard {
+    protected int[][] board = new int[9][9];
 
+    public abstract void generateBoard();
 
-    /*
-     * board
-     * 2D array representing the Sudoku grid.
-     * Values range from 1–9.
-     * A value of 0 represents an empty cell.
-     */
+    public void display() {
+        System.out.println("    1 2 3   4 5 6   7 8 9");
+        System.out.println("  +-------+-------+-------+");
 
+        for(int row = 0; row < 9; ++row) {
+            System.out.print(row + 1 + " | ");
 
-    /*
-     * generateBoard()
-     * Abstract method that must be implemented by subclasses.
-     * Responsible for generating or loading a valid Sudoku puzzle.
-     */
+            for(int col = 0; col < 9; ++col) {
+                if (this.board[row][col] == 0) {
+                    System.out.print(". ");
+                } else {
+                    System.out.print(this.board[row][col] + " ");
+                }
 
-    /*
-     * display()
-     * ----------
-     * Prints the board in a formatted layout.
-     * Includes row and column labels and separators
-     * for every 3x3 subgrid.
-     */
+                if ((col + 1) % 3 == 0) {
+                    System.out.print("| ");
+                }
+            }
 
-    /*
-     * isComplete()
-     * -------------
-     * Checks if the board has no empty cells.
-     * Returns true if all cells are filled (no 0 values),
-     * otherwise returns false.
-     * Note: Does not check if the solution is correct.
-     */
+            System.out.println();
+            if ((row + 1) % 3 == 0) {
+                System.out.println("  +-------+-------+-------+");
+            }
+        }
 
-    /*
-     * getBoard()
-     * -----------
-     * Returns the entire 2D board array.
-     * Allows other classes (e.g., Solver or Game)
-     * to access the current board state.
-     */
+    }
 
-    /*
-     * setNumber(row, col, num)
-     * -------------------------
-     * Sets a number in a specific cell.
-     * Does not validate whether the move is legal.
-     * Validation should be handled in the Game or Solver class.
-     */
+    public boolean isComplete() {
+        for(int row = 0; row < 9; ++row) {
+            for(int col = 0; col < 9; ++col) {
+                if (this.board[row][col] == 0) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public int[][] getBoard() {
+        return this.board;
+    }
+
+    public void setNumber(int row, int col, int num) {
+        this.board[row][col] = num;
+    }
 }
