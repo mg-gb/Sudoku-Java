@@ -15,11 +15,11 @@ public abstract class SudokuBoard {
         System.out.println("    1 2 3   4 5 6   7 8 9");
         System.out.println("  +-------+-------+-------+");
 
-        for (int row = 0; row < 9; row++) {
+        for (int row = 0; row < GRID_SIZE; row++) {
 
             System.out.print(row + " | ");
 
-            for (int col = 0; col < 9; col++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
 
                 if (board[row][col] == 0) {
                     System.out.print(". ");
@@ -45,8 +45,8 @@ public abstract class SudokuBoard {
 
     public boolean isComplete() {
 
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
 
                 if (board[row][col] == 0) {
                     return false; // found empty cell
