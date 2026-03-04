@@ -1,57 +1,94 @@
 package com.project.sudoku.board;
 
-public class SudokuBoard {
-    /*
-     * Defines the structure and core behavior of a Sudoku board.
-     * Provides the grid representation and basic board operations.
-     * Puzzle generation must be implemented by subclasses.
-     */
-
-
+public abstract class SudokuBoard {
     /*
      * board
      * 2D array representing the Sudoku grid.
      * Values range from 1–9.
-     * A value of 0 represents an empty cell.
+     * 0 means empty cell.
      */
+    protected int[][] board = new int[9][9];
 
 
     /*
      * generateBoard()
-     * Abstract method that must be implemented by subclasses.
-     * Responsible for generating or loading a valid Sudoku puzzle.
+     * Abstract method.
+     * Subclasses must implement how the puzzle is created.
      */
+    public abstract void generateBoard();
+
 
     /*
      * display()
-     * ----------
      * Prints the board in a formatted layout.
-     * Includes row and column labels and separators
-     * for every 3x3 subgrid.
      */
+    public void display() {
+
+        System.out.println("    1 2 3   4 5 6   7 8 9");
+        System.out.println("  +-------+-------+-------+");
+
+        for (int row = 0; row < 9; row++) {
+
+            System.out.print(row + " | ");
+
+            for (int col = 0; col < 9; col++) {
+
+                if (board[row][col] == 0) {
+                    System.out.print(". ");
+                } else {
+                    System.out.print(board[row][col] + " ");
+                }
+
+                // Add vertical separator every 3 columns
+                if ((col + 1) % 3 == 0) {
+                    System.out.print("| ");
+                }
+            }
+
+            System.out.println();
+
+            // Add horizontal separator every 3 rows
+            if ((row + 1) % 3 == 0) {
+                System.out.println("  +-------+-------+-------+");
+            }
+        }
+    }
+
 
     /*
      * isComplete()
-     * -------------
-     * Checks if the board has no empty cells.
-     * Returns true if all cells are filled (no 0 values),
-     * otherwise returns false.
-     * Note: Does not check if the solution is correct.
+     * Returns true if no cell contains 0.
      */
+    public boolean isComplete() {
+
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+
+                if (board[row][col] == 0) {
+                    return false; // found empty cell
+                }
+            }
+        }
+
+        return true; // no empty cells
+    }
+
 
     /*
      * getBoard()
-     * -----------
-     * Returns the entire 2D board array.
-     * Allows other classes (e.g., Solver or Game)
-     * to access the current board state.
+     * Returns the board array.
      */
+    public int[][] getBoard() {
+        return board;
+    }
+
 
     /*
      * setNumber(row, col, num)
-     * -------------------------
-     * Sets a number in a specific cell.
-     * Does not validate whether the move is legal.
-     * Validation should be handled in the Game or Solver class.
+     * Sets a value in a cell.
+     * No validation here.
      */
+    public void setNumber(int row, int col, int num) {
+        board[row][col] = num;
+    }
 }
