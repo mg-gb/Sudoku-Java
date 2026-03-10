@@ -99,4 +99,18 @@ public class GameController {
         System.out.println("");
         board.displaySolved(board.getSolvedBoard());
     }
+
+    private boolean isPuzzleSolved() {
+        int[][] current = board.getBoard();
+        int[][] solved = board.getSolvedBoard();
+
+        for (int row = 0; row < current.length; row++) {
+            for (int col = 0; col < current[row].length; col++) {
+                if (current[row][col] != solved[row][col]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
