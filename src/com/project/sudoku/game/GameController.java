@@ -97,7 +97,6 @@ public class GameController {
     //show solved board
     private void handleSolveDebug() {
         System.out.println("");
-        solver.solve(board.getBoard());
-        board.display();
+        board.displaySolved(board.getSolvedBoard());
     }
 }
