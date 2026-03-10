@@ -6,11 +6,7 @@ import java.util.Random;
 
 public class HintSystem {
     private final Random rand = new Random();
-
-    public HintSystem(SimpleSolver solver){
-        this.solver = solver;
-    }
-
+    
     public Hint getHint(int[][] board, int[][] solvedBoard){
         List<int[]> emptyCells = collectEmptyCells(board);
 
