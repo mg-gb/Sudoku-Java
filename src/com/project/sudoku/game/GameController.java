@@ -72,7 +72,7 @@ public class GameController {
         int num = inputHandler.getNumber();
 
         //check if move is valid
-        if(validator.isValidMove(board.getBoard(), row, col, num)) {
+        if(validator.isValidMove(board.getBoard(), board.getSolvedBoard(), row, col, num)) {
             board.setNumber(row, col, num);
             System.out.println("Move accepted!\n");
         } else {
