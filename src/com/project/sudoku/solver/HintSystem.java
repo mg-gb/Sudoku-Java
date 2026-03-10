@@ -5,30 +5,22 @@ import java.util.List;
 import java.util.Random;
 
 public class HintSystem {
-    private final SimpleSolver solver;
+    private final Random rand = new Random();
+
     public HintSystem(SimpleSolver solver){
         this.solver = solver;
     }
 
-    public Hint getHint(int[][] board){
-        if(!solver.isSolvable(board)) return null;
-
-        int[][] copy = new int[board.length][board.length];
-        for(int i = 0;i < copy.length;i++){
-            for(int j = 0;j < copy.length;j++){
-                copy[i][j] = board[i][j];
-            }
-        }
-        solver.solve(copy);
-
+    public Hint getHint(int[][] board, int[][] solvedBoard){
         List<int[]> emptyCells = collectEmptyCells(board);
+
         if(emptyCells.isEmpty()) return null;
-        Random rand = new Random();
+
         int index = rand.nextInt(emptyCells.size());
         int pos[] = emptyCells.get(index);
         int hintRow = pos[0];
         int hintCol = pos[1];
-        int hintNum = copy[hintRow][hintCol];
+        int hintNum = solvedBoard[hintRow][hintCol];
 
         return new Hint(hintRow, hintCol, hintNum);
 
